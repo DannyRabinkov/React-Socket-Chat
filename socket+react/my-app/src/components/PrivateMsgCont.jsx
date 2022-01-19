@@ -50,6 +50,7 @@ function PrivateMsgCont(props) {
         height: "450px",
         border: "solid #000 1px",
         marginLeft: 550,
+        boxSizing: "content-box",
       }}
     >
       <h1>{privateWith}</h1>
@@ -69,6 +70,7 @@ function PrivateMsgCont(props) {
       </div>
       <form id="privateMsgFooter" onSubmit={(e) => e.preventDefault()}>
         <input
+          onKeyDown={props.startTyping}
           type="text"
           placeholder="Hey..."
           value={currentPrivateMessage}
@@ -77,6 +79,9 @@ function PrivateMsgCont(props) {
             setCurrentPrivateMessage(event.target.value);
           }}
         />
+        {userList.map((user) => {
+          return <div> {user.typing ? "is typing.." : ""} </div>;
+        })}
         <button onClick={sendPrivateMessage}>Send</button>
       </form>
     </div>

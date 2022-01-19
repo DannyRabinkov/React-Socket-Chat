@@ -46,9 +46,8 @@ io.on("connection", (socket) => {
 
   socket.on("send_private_message", (data) => {
     console.log(data);
-    io.to(data.from).to(data.to).emit("receive_privMsg", data);
-
-    // io.of(socket.username).to(socket.room).emit("receive_message", data);
+    socket.broadcast.to(data.to).emit("show_users_inChat", users);
+    socket.broadcast.to(data.from).to(data.to).emit("receive_privMsg", data);
   });
 
   socket.on("select_user", (data) => {

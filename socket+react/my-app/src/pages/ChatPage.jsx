@@ -30,7 +30,6 @@ function ChatPage(props) {
   const [userIn, setUserIn] = useState([]);
   const [privateMsg, setPrivateMsg] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [userPriv, setUserPriv] = useState("");
 
   const prevTypingState = usePrevious(isTyping);
 
@@ -121,6 +120,7 @@ function ChatPage(props) {
             privateMsg={privateMsg}
             socket={props.socket}
             to={props.room}
+            startTyping={startTyping}
           />
         )}
         {messageList.map((messageContent) => {
