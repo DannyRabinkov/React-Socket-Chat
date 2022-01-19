@@ -4,7 +4,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
+
+
 
 #nickForm {
   padding: 5px;
@@ -19,50 +22,28 @@ body {
   margin-top: 5px;
 }
 
+.chat-window {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  overflow-y: auto;
+}
+
 #chat-footer {
   background: rgba(0, 0, 0, 0.15);
   padding: 0.25rem;
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
+  flex-direction: row;
   height: 3rem;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
-  margin-top: 20px;
-}
-
-#privateMsgFooter {
-  background: rgba(0, 0, 0, 0.15);
-  padding: 0.25rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  height: 3rem;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  margin-top: 20px;
-}
-
-#privateMsgFooter>button {
-  background: #333;
-  border: none;
-  padding: 0 1rem;
-  margin: 0.25rem;
-  border-radius: 3px;
-  outline: none;
-  color: #fff;
-}
-
-#privateMsgFooter>input {
-  border: none;
-  padding: 0 1rem;
-  flex-grow: 1;
-  border-radius: 2rem;
-  margin: 0.25rem;
+  margin-top: 5px;
 }
 
 #input {
@@ -107,34 +88,79 @@ body {
   top: 20px;
 }
 
-.allUsers {
-  position: absolute;
-  right: 20px;
-  margin-top: 5px;
-}
-
-
 
 .allUsersCont {
+  background-color: steelblue;
   position: absolute;
   text-align: center;
   right: 0;
-  margin-top: 30px;
+  margin-top: 5rem;
   border: #333 solid 1px;
   width: 23%;
-  height: 100%-30px;
-  margin-bottom: 30px;
   box-sizing: border-box;
 }
 
 .privateMsgWindow {
-  position: relative;
   width: 350px;
   height: 450px;
   border: solid #000 1px;
   margin-left: 550px;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+.privateMsgHeader {
+  box-shadow: lightgreen;
+  text-align: center;
+  background-color: tan;
+  border: lightcoral solid 2px;
+}
+
+.priateMsgBody {
+  box-sizing: border-box;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.privateMsgFooter {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: row;
+  height: 4rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  margin-top: 0px;
+
+}
+
+.privateMsgFooter>input {
+  border: none;
+  padding: 0 1rem;
+  flex-grow: 1;
+  border-radius: 2rem;
+  margin: 0.25rem;
+}
+
+.privateMsgFooter>button {
+  background: #333;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+}
+
+
+
+
 
 
 code {

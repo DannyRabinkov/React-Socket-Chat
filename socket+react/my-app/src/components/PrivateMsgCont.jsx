@@ -8,10 +8,12 @@ function PrivateMsgCont(props) {
   const username = props.socket.auth.username;
   const privateWith = props.privateMsg;
 
+  const scrollDown = () => {
+    let objDiv = document.getElementById("privateBody");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  };
+
   const sendPrivateMessage = async () => {
-    // props.socket.on("user_private", (data) => {
-    //   setUserPriv(data);
-    // });
     if (currentPrivateMessage !== "") {
       const messageData = {
         from: username,
@@ -43,9 +45,10 @@ function PrivateMsgCont(props) {
 
   return (
     <div className="privateMsgWindow">
-      <h1>{privateWith}</h1>
-      <div className="privateMsgHeader">{props.socket.username}</div>
-      <div className="priateMsgBody">
+      <div className="privateMsgHeader">
+        <h1>{privateWith}</h1>
+      </div>
+      <div id="privateBody" className="priateMsgBody">
         {privateMessageList.map((messageContent) => {
           return (
             <ul
@@ -58,7 +61,13 @@ function PrivateMsgCont(props) {
           );
         })}
       </div>
-      <form id="privateMsgFooter" onSubmit={(e) => e.preventDefault()}>
+      <form
+        className="privateMsgFooter"
+        onSubmit={(e) => {
+          e.preventDefault();
+          scrollDown();
+        }}
+      >
         <input
           onKeyDown={props.startTyping}
           type="text"

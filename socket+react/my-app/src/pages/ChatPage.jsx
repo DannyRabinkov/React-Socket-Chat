@@ -35,6 +35,11 @@ function ChatPage(props) {
 
   const cancelTyping = debounce(() => setIsTyping(false));
 
+  const scrollDown = () => {
+    let objDiv = document.getElementById("og-chat-body");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  };
+
   const startTyping = () => {
     setIsTyping(true);
     cancelTyping();
@@ -114,7 +119,7 @@ function ChatPage(props) {
         })}
       </div>
 
-      <div className="chat-body">
+      <div id="og-chat-body" className="chat-body">
         {privateMsg && (
           <PrivateMsgCont
             privateMsg={privateMsg}
@@ -128,6 +133,7 @@ function ChatPage(props) {
             <ul
               key={Math.random().toString(36).substr(2, 9)}
               className="message-meta"
+              hidden={privateMsg ? "hidden" : ""}
             >
               {messageContent.username} {messageContent.time}
               <li>{messageContent.message}</li>
@@ -135,7 +141,13 @@ function ChatPage(props) {
           );
         })}
       </div>
-      <form id="chat-footer" onSubmit={(e) => e.preventDefault()}>
+      <form
+        id="chat-footer"
+        onSubmit={(e) => {
+          e.preventDefault();
+          scrollDown();
+        }}
+      >
         <input
           onKeyDown={startTyping}
           id="input"
