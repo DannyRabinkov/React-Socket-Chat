@@ -42,17 +42,7 @@ function PrivateMsgCont(props) {
   }, [props.socket]);
 
   return (
-    <div
-      className="privateMsgWindow"
-      style={{
-        position: "absolute",
-        width: "350px",
-        height: "450px",
-        border: "solid #000 1px",
-        marginLeft: 550,
-        boxSizing: "content-box",
-      }}
-    >
+    <div className="privateMsgWindow">
       <h1>{privateWith}</h1>
       <div className="privateMsgHeader">{props.socket.username}</div>
       <div className="priateMsgBody">
