@@ -4,6 +4,7 @@ function PrivateMsgCont(props) {
   const [currentPrivateMessage, setCurrentPrivateMessage] = useState("");
   const [userList, setUserList] = useState([]);
   const [privateMessageList, setPrivateMessageList] = useState([]);
+  const [msgCount, setMsgCount] = useState("");
 
   const username = props.socket.auth.username;
   const privateWith = props.privateMsg;
@@ -49,16 +50,19 @@ function PrivateMsgCont(props) {
     });
   }, [props.socket]);
 
-  useEffect(() => {
-    // props.socket.on("receive_privMsg", (data) => {
-    // if (
-    //   privateMessageList.message &&
-    //   privateMessageList.to != props.socket.username
-    // )
-    // console.log(privateMessageList.to);
-    /* }); */
-    // console.log("prive message is for ", privateWith);
-  });
+  // useEffect(() => {
+  //   if (
+  //     privateMessageList.filter(
+  //       (message) =>
+  //         message.from === privateWith ||
+  //         (message.from === username &&
+  //           message.to === privateWith &&
+  //           message.message !== "")
+  //     )
+  //   )
+  //     setMsgCount(msgCount + 1);
+  //   console.log(msgCount);
+  // });
 
   return (
     <div className="privateMsgWindow">
