@@ -40,6 +40,14 @@ function ChatPage(props) {
     objDiv.scrollTop = objDiv.scrollHeight;
   };
 
+  const deleteElementFromArr = () => {
+    if (userIn.length > 0) {
+      let temp = userIn.slice();
+      temp.splice(0, 1);
+      setUserIn(temp);
+    }
+  };
+
   const startTyping = () => {
     setIsTyping(true);
     cancelTyping();
@@ -81,6 +89,7 @@ function ChatPage(props) {
   useEffect(() => {
     props.socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
+      scrollDown();
     });
   }, [props.socket]);
 
@@ -91,75 +100,81 @@ function ChatPage(props) {
   }, [props.socket]);
 
   useEffect(() => {
+    let timer = setTimeout(deleteElementFromArr, 5000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
     props.socket.on("logout_message", (data) => {
       setUserIn((list) => [...list, data]);
     });
   }, [props.socket]);
 
   return (
-    <div className="chat-window">
-      <div className="chat-header">
-        <p>{props.room}</p>
-        <button className="logBtn" onClick={logOut}>
-          LogOut
-        </button>
+    <div className="chat-page">
+      <div className="chat-window">
+        <div className="chat-header">
+          <p>{props.room}</p>
+          <button className="logBtn" onClick={logOut}>
+            LogOut
+          </button>
+        </div>
+        <div id="og-chat-body" className="chat-body">
+          <div>
+            {userIn.map((userloged) => {
+              return (
+                <ul key={Math.random().toString(36).substr(2, 9)}>
+                  {userloged}
+                </ul>
+              );
+            })}
+          </div>
+          {privateMsg && (
+            <PrivateMsgCont
+              privateMsg={privateMsg}
+              socket={props.socket}
+              to={props.room}
+              startTyping={startTyping}
+            />
+          )}
+          {messageList.map((messageContent) => {
+            return (
+              <ul
+                key={Math.random().toString(36).substr(2, 9)}
+                className="message-meta"
+                hidden={privateMsg ? "hidden" : ""}
+              >
+                {messageContent.username} {messageContent.time}
+                <li>{messageContent.message}</li>
+              </ul>
+            );
+          })}
+        </div>
+        <form
+          id="chat-footer"
+          onSubmit={(e) => {
+            e.preventDefault();
+            scrollDown();
+          }}
+        >
+          <input
+            onKeyDown={startTyping}
+            id="input"
+            value={currentMessage}
+            placeholder="..."
+            onChange={(event) => {
+              setCurrentMessage(event.target.value);
+            }}
+            autoComplete="off"
+          />
+          <button onClick={sendMessage}>Send</button>
+        </form>
       </div>
-
       <UserCont
         socket={props.socket}
         privMsg={(privateMsg) => setPrivateMsg(privateMsg)}
         privMsgUser={privateMsg}
       />
-
-      <div>
-        {userIn.map((userloged) => {
-          return (
-            <ul key={Math.random().toString(36).substr(2, 9)}>{userloged}</ul>
-          );
-        })}
-      </div>
-
-      <div id="og-chat-body" className="chat-body">
-        {privateMsg && (
-          <PrivateMsgCont
-            privateMsg={privateMsg}
-            socket={props.socket}
-            to={props.room}
-            startTyping={startTyping}
-          />
-        )}
-        {messageList.map((messageContent) => {
-          return (
-            <ul
-              key={Math.random().toString(36).substr(2, 9)}
-              className="message-meta"
-              hidden={privateMsg ? "hidden" : ""}
-            >
-              {messageContent.username} {messageContent.time}
-              <li>{messageContent.message}</li>
-            </ul>
-          );
-        })}
-      </div>
-      <form
-        id="chat-footer"
-        onSubmit={(e) => {
-          e.preventDefault();
-          scrollDown();
-        }}
-      >
-        <input
-          onKeyDown={startTyping}
-          id="input"
-          value={currentMessage}
-          placeholder="..."
-          onChange={(event) => {
-            setCurrentMessage(event.target.value);
-          }}
-          autoComplete="off"
-        />
-        <button onClick={sendMessage}>Send</button>
-      </form>
     </div>
   );
 }

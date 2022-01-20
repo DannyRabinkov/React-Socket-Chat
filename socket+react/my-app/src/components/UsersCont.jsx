@@ -32,8 +32,9 @@ function UserCont(props) {
                   onClick={() => selectUser(user)}
                   style={{ cursor: "pointer" }}
                 >
+                  <span className="msgAlers">1</span>
                   <strong>{user.username}</strong>
-                  <span style={{ color: "green" }}>
+                  <span style={{ color: "black" }}>
                     {user.typing ? " is typing..." : ""}
                   </span>
                 </ul>

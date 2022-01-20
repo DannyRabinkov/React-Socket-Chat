@@ -4,10 +4,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  margin: 0;
 }
 
+.container {
+  /* background-color: red; */
+  display: flex;
+}
 
+.chat-page {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+}
 
 #nickForm {
   padding: 5px;
@@ -22,16 +31,27 @@ body {
   margin-top: 5px;
 }
 
+
 .chat-window {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.chat-header {
+  background-color: darkcyan;
+  padding: 5px;
+  padding-left: 30px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #333;
 }
 
 .chat-body {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 100%;
   overflow-y: auto;
 }
 
@@ -91,12 +111,9 @@ body {
 
 .allUsersCont {
   background-color: steelblue;
-  position: absolute;
   text-align: center;
-  right: 0;
-  margin-top: 5rem;
-  border: #333 solid 1px;
-  width: 23%;
+  border-left: #333 solid 1px;
+  width: 20rem;
   box-sizing: border-box;
 }
 
@@ -158,6 +175,12 @@ body {
   color: #fff;
 }
 
+
+.msgAlers {
+  background: red;
+  border: red solid;
+  border-radius: 60%;
+}
 
 
 

@@ -26,7 +26,12 @@ function PrivateMsgCont(props) {
       };
 
       await props.socket.emit("send_private_message", messageData);
+      // privateMessageList
+      //   .filter((user) => user.username != username)
+      //   .map((list) => {
+      //   });
       setPrivateMessageList((list) => [...list, messageData]);
+
       setCurrentPrivateMessage("");
     }
   };
@@ -40,8 +45,20 @@ function PrivateMsgCont(props) {
   useEffect(() => {
     props.socket.on("receive_privMsg", (data) => {
       setPrivateMessageList((list) => [...list, data]);
+      scrollDown();
     });
   }, [props.socket]);
+
+  useEffect(() => {
+    // props.socket.on("receive_privMsg", (data) => {
+    // if (
+    //   privateMessageList.message &&
+    //   privateMessageList.to != props.socket.username
+    // )
+    // console.log(privateMessageList.to);
+    /* }); */
+    // console.log("prive message is for ", privateWith);
+  });
 
   return (
     <div className="privateMsgWindow">
@@ -49,17 +66,23 @@ function PrivateMsgCont(props) {
         <h1>{privateWith}</h1>
       </div>
       <div id="privateBody" className="priateMsgBody">
-        {privateMessageList.map((messageContent) => {
-          return (
-            <ul
-              key={Math.random().toString(36).substr(2, 9)}
-              className="message-meta"
-            >
-              {messageContent.from} {messageContent.time}
-              <li>{messageContent.message}</li>
-            </ul>
-          );
-        })}
+        {privateMessageList
+          .filter(
+            (message) =>
+              message.from === privateWith ||
+              (message.from === username && message.to === privateWith)
+          )
+          .map((messageContent) => {
+            return (
+              <ul
+                key={Math.random().toString(36).substr(2, 9)}
+                className="message-meta"
+              >
+                {messageContent.from} {messageContent.time}
+                <li>{messageContent.message}</li>
+              </ul>
+            );
+          })}
       </div>
       <form
         className="privateMsgFooter"
