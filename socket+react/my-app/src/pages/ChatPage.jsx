@@ -29,9 +29,13 @@ function ChatPage(props) {
   const [messageList, setMessageList] = useState([]);
   const [userIn, setUserIn] = useState([]);
   const [privateMsg, setPrivateMsg] = useState(false);
+  const [privateUserName, setPrivateUserName] = useState();
+  const [prvMsgLst, setPrvMsgLst] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [privateMessageList, setPrivateMessageList] = useState([]);
 
   const prevTypingState = usePrevious(isTyping);
+  const prevUser = usePrevious(privateMsg);
 
   const cancelTyping = debounce(() => setIsTyping(false));
 
@@ -87,6 +91,14 @@ function ChatPage(props) {
   };
 
   useEffect(() => {
+    props.socket.on("receive_privMsg", (data) => {
+      console.log("new prv msg", data);
+      setPrivateMessageList((list) => [...list, data]);
+      scrollDown();
+    });
+  }, [props.socket]);
+
+  useEffect(() => {
     props.socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
       scrollDown();
@@ -131,7 +143,11 @@ function ChatPage(props) {
           </div>
           {privateMsg && (
             <PrivateMsgCont
+              privateList={privateMessageList}
               privateMsg={privateMsg}
+              prvLst={(privateMessageList) =>
+                setPrivateMessageList(privateMessageList)
+              }
               socket={props.socket}
               to={props.room}
               startTyping={startTyping}
@@ -171,9 +187,15 @@ function ChatPage(props) {
         </form>
       </div>
       <UserCont
+        isPrivate={privateMessageList}
+        isNotPrivate={(privateMessageList) =>
+          setPrivateMessageList(privateMessageList)
+        }
         socket={props.socket}
         privMsg={(privateMsg) => setPrivateMsg(privateMsg)}
         privMsgUser={privateMsg}
+        // privateName={(privateUserName) => setPrivateUserName(privateUserName)}
+        // prevPrivMsgUser={prevUser}
       />
     </div>
   );

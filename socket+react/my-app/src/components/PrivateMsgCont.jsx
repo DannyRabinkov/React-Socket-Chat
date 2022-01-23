@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 function PrivateMsgCont(props) {
   const [currentPrivateMessage, setCurrentPrivateMessage] = useState("");
   const [userList, setUserList] = useState([]);
-  const [privateMessageList, setPrivateMessageList] = useState([]);
-  const [msgCount, setMsgCount] = useState("");
+  // const [privateMessageList, setPrivateMessageList] = useState([]);
+  const [prvMsgCount, setPrvMsgCount] = useState(0);
 
   const username = props.socket.auth.username;
   const privateWith = props.privateMsg;
@@ -20,6 +20,7 @@ function PrivateMsgCont(props) {
         from: username,
         to: privateWith,
         message: currentPrivateMessage,
+        timestamp: +new Date(),
         time:
           new Date(Date.now()).getHours() +
           ":" +
@@ -27,11 +28,7 @@ function PrivateMsgCont(props) {
       };
 
       await props.socket.emit("send_private_message", messageData);
-      // privateMessageList
-      //   .filter((user) => user.username != username)
-      //   .map((list) => {
-      //   });
-      setPrivateMessageList((list) => [...list, messageData]);
+      props.prvLst((list) => [...list, messageData]);
 
       setCurrentPrivateMessage("");
     }
@@ -45,23 +42,20 @@ function PrivateMsgCont(props) {
 
   useEffect(() => {
     props.socket.on("receive_privMsg", (data) => {
-      setPrivateMessageList((list) => [...list, data]);
+      props.prvLst((list) => [...list, data]);
       scrollDown();
     });
   }, [props.socket]);
 
+  // const countMsgs = (privateMessageList) => {
+  //   if (privateMessageList) prvCount += 1;
+  //   setPrvMsgCount(prvCount);
+
+  //   console.log(prvCount);
+  // };
+
   // useEffect(() => {
-  //   if (
-  //     privateMessageList.filter(
-  //       (message) =>
-  //         message.from === privateWith ||
-  //         (message.from === username &&
-  //           message.to === privateWith &&
-  //           message.message !== "")
-  //     )
-  //   )
-  //     setMsgCount(msgCount + 1);
-  //   console.log(msgCount);
+  //   countMsgs();
   // });
 
   return (
@@ -70,7 +64,7 @@ function PrivateMsgCont(props) {
         <h1>{privateWith}</h1>
       </div>
       <div id="privateBody" className="priateMsgBody">
-        {privateMessageList
+        {props.privateList
           .filter(
             (message) =>
               message.from === privateWith ||
