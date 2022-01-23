@@ -2,6 +2,7 @@ const app = require("express")();
 const http = require("http").createServer(app);
 const cors = require("cors");
 const io = require("socket.io")(http, {
+  path: "/my-app",
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
