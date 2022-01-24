@@ -126,7 +126,9 @@ function ChatPage(props) {
     <div className="chat-page">
       <div className="chat-window">
         <div className="chat-header">
-          <p>{props.room}</p>
+          <p style={{ fontFamily: "serif" }} className="mt-3">
+            {props.room}
+          </p>
           <Button variant="danger" className="logBtn" onClick={logOut}>
             LogOut
           </Button>

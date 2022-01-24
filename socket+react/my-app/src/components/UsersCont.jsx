@@ -54,7 +54,9 @@ function UserCont(props) {
   return (
     <>
       <div className="allUsersCont">
-        <h2 className="mt-4">Users In</h2>
+        <h2 className="mt-4" style={{ fontFamily: "serif", fontWeight: 700 }}>
+          Users In
+        </h2>
         <div className="usersLogedIn">
           {showUsers
             .filter((user) => user.username !== username)

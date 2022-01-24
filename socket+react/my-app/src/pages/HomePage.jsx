@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function HomePage(props) {
   const [isSubmit, setSubmit] = useState(false);
@@ -10,12 +11,8 @@ function HomePage(props) {
     localStorage.setItem("user", username);
     props.socket.auth = { username, room };
     props.socket.connect();
-    // const users = [];
-    // users.push({ username, room });
-    // console.log(users);
     props.socket.emit("joinRoom", roomInput);
     props.room(roomInput);
-    // return users;
   };
 
   const onMessageSubmit = () => {
@@ -25,6 +22,7 @@ function HomePage(props) {
   return (
     <>
       <form
+        className="justify-content-center"
         id="nickForm"
         onSubmit={(e) => {
           e.preventDefault();
@@ -32,9 +30,10 @@ function HomePage(props) {
           onMessageSubmit();
         }}
       >
-        <label>Enter a nickname: </label>
+        <Form.Label>Enter a nickname: </Form.Label>
         <input
-          className="mb-3"
+          style={{ width: "35%" }}
+          className="m-3"
           id="nickname"
           name="username"
           value={nameInput}
@@ -44,9 +43,10 @@ function HomePage(props) {
           }}
         />
         <br />
-        <label>Room: </label>
+        <Form.Label>Room: </Form.Label>
         <select
-          className="mb-3"
+          style={{ width: "25%" }}
+          className="m-2"
           name="room"
           value={roomInput}
           onChange={(e) => {
@@ -54,7 +54,7 @@ function HomePage(props) {
             /* e.preventDefault(); */
           }}
         >
-          <option value="">Choose a room</option>
+          <option>Choose a room</option>
           <option value="SwitchQ">SwitchQ</option>
           <option value="Fun">Fun</option>
           <option value="Managers">Managers</option>
