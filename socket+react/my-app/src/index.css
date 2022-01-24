@@ -7,7 +7,7 @@ body {
   margin: 0;
 }
 
-.container {
+.cont {
   /* background-color: red; */
   display: flex;
 }
@@ -103,9 +103,11 @@ body {
 }
 
 .logBtn {
-  position: absolute;
+  /* position: absolute;
   right: 20px;
-  top: 20px;
+  top: 20px; */
+  display: flex;
+  flex-direction: row;
 }
 
 

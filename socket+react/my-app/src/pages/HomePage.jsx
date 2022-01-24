@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 
 function HomePage(props) {
   const [isSubmit, setSubmit] = useState(false);
@@ -33,6 +34,7 @@ function HomePage(props) {
       >
         <label>Enter a nickname: </label>
         <input
+          className="mb-3"
           id="nickname"
           name="username"
           value={nameInput}
@@ -44,6 +46,7 @@ function HomePage(props) {
         <br />
         <label>Room: </label>
         <select
+          className="mb-3"
           name="room"
           value={roomInput}
           onChange={(e) => {
@@ -57,7 +60,7 @@ function HomePage(props) {
           <option value="Managers">Managers</option>
         </select>
         <br />
-        <button
+        <Button
           id="nick-btn"
           type="submit"
           onClick={() => {
@@ -65,7 +68,7 @@ function HomePage(props) {
           }}
         >
           submit!
-        </button>
+        </Button>
       </form>
     </>
   );

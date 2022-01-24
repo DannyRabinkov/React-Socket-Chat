@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <div className="container">
+      <div className="cont">
         {!isSigned && (
           <HomePage
             socket={socket}

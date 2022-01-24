@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PrivateMsgCont from "../components/PrivateMsgCont";
 import UserCont from "../components/UsersCont";
+import Button from "react-bootstrap/Button";
 
 function usePrevious(value) {
   const ref = useRef();
@@ -126,9 +127,9 @@ function ChatPage(props) {
       <div className="chat-window">
         <div className="chat-header">
           <p>{props.room}</p>
-          <button className="logBtn" onClick={logOut}>
+          <Button variant="danger" className="logBtn" onClick={logOut}>
             LogOut
-          </button>
+          </Button>
         </div>
         <div id="og-chat-body" className="chat-body">
           <div>
