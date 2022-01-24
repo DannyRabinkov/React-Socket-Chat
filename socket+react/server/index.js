@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
   socket.on("send_private_message", (data) => {
     console.log(data);
-    socket.broadcast.to(data.to).emit("show_users_inChat", users);
+    // socket.broadcast.to(data.to).emit("show_users_inChat", users);
     socket.broadcast.to(data.from).to(data.to).emit("receive_privMsg", data);
   });
 
@@ -56,9 +56,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("typing", (isTyping) => {
-    console.log(" typing: ", isTyping);
+    // console.log(" typing: ", isTyping);
     socket.log.typing = isTyping;
-    io.to(socket.room).emit("show_users", users);
+    io.to(socket.room).emit("show_users", getUsers());
   });
 
   socket.on("disconnect", () => {

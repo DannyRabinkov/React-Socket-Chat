@@ -40,12 +40,12 @@ function PrivateMsgCont(props) {
     });
   }, [userList]);
 
-  useEffect(() => {
-    props.socket.on("receive_privMsg", (data) => {
-      props.prvLst((list) => [...list, data]);
-      scrollDown();
-    });
-  }, [props.socket]);
+  // useEffect(() => {
+  //   props.socket.on("receive_privMsg", (data) => {
+  //     props.prvLst((list) => [...list, data]);
+  //     scrollDown();
+  //   });
+  // }, [props.socket]);
 
   // const countMsgs = (privateMessageList) => {
   //   if (privateMessageList) prvCount += 1;

@@ -29,8 +29,8 @@ function ChatPage(props) {
   const [messageList, setMessageList] = useState([]);
   const [userIn, setUserIn] = useState([]);
   const [privateMsg, setPrivateMsg] = useState(false);
-  const [privateUserName, setPrivateUserName] = useState();
-  const [prvMsgLst, setPrvMsgLst] = useState([]);
+  // const [privateUserName, setPrivateUserName] = useState();
+  // const [prvMsgLst, setPrvMsgLst] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [privateMessageList, setPrivateMessageList] = useState([]);
 
@@ -92,7 +92,6 @@ function ChatPage(props) {
 
   useEffect(() => {
     props.socket.on("receive_privMsg", (data) => {
-      console.log("new prv msg", data);
       setPrivateMessageList((list) => [...list, data]);
       scrollDown();
     });
@@ -188,9 +187,9 @@ function ChatPage(props) {
       </div>
       <UserCont
         isPrivate={privateMessageList}
-        isNotPrivate={(privateMessageList) =>
-          setPrivateMessageList(privateMessageList)
-        }
+        // isNotPrivate={(privateMessageList) =>
+        //   setPrivateMessageList(privateMessageList)
+        // }
         socket={props.socket}
         privMsg={(privateMsg) => setPrivateMsg(privateMsg)}
         privMsgUser={privateMsg}

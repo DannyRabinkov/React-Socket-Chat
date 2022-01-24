@@ -1,32 +1,49 @@
 import React, { useState, useEffect, useRef } from "react";
 
-// function usePrevious(value) {
-//   const ref = useRef();
-//   useEffect(() => {
-//     ref.current = value;
-//   });
-//   return ref.current;
-// }
+const groupBy = (items, key) =>
+  items.reduce(
+    (result, item) => ({
+      ...result,
+      [item[key]]: [...(result[item[key]] || []), item],
+    }),
+    {}
+  );
 
 function UserCont(props) {
   const [showUsers, setShowUsers] = useState([]);
-  const [isTime, setIsTime] = useState();
+  const [isTime, setIsTime] = useState({});
+  const [newMsg, setNewMsg] = useState({});
   const username = props.socket.auth.username;
 
-  // const prevUser = usePrevious(props.privMsgUser);
-
   const selectUser = (user) => {
-    // console.log(user.username, prevUser, user === prevUser);
-    // const state = props.privMsgUser === user.username ? false : user.username;
     const userState = props.privMsgUser === user.username ? "" : user.username;
     props.privMsg(userState);
-    setIsTime(+new Date());
-    console.log("prevPrivMsgUser", props.privMsgUser);
-    // if (!props.privMsgUser) {
-    //   props.isNotPrivate([]);
-    //   console.log(isTime);
-    // }
+    setIsTime((isTime) => {
+      isTime[props.privMsgUser] = +new Date();
+      isTime[user.username] = +new Date();
+      return isTime;
+    });
   };
+
+  useEffect(() => {
+    setPrivateMsgsCounts();
+  }, [props.isPrivate, props.privMsg]);
+
+  function setPrivateMsgsCounts() {
+    let newMsgsObj = groupBy(props.isPrivate, "from");
+    for (const user in newMsgsObj) {
+      newMsgsObj[user] = newMsgsObj[user].filter((msg) => {
+        console.log("user", user);
+        console.log("msg", msg);
+        // return msg;
+        return (
+          msg.timestamp > (isTime[user] || 0) && props.privMsgUser !== user
+        );
+      }).length;
+    }
+    console.log("newMsgsObj", newMsgsObj);
+    setNewMsg(newMsgsObj);
+  }
 
   useEffect(async () => {
     await props.socket.on("show_users", (data) => {
@@ -49,11 +66,8 @@ function UserCont(props) {
                   onClick={() => selectUser(user)}
                   style={{ cursor: "pointer" }}
                 >
-                  <span className="msgAlerts">
-                    {
-                      props.isPrivate.filter((msg) => msg.from == user.username)
-                        .length
-                    }
+                  <span className="msgAlerts" hidden={!newMsg[user.username]}>
+                    {newMsg[user.username]}
                   </span>
                   <strong>{user.username}</strong>
                   <span style={{ color: "black" }}>
