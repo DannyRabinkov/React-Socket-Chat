@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 function PrivateMsgCont(props) {
   const [currentPrivateMessage, setCurrentPrivateMessage] = useState("");
   const [userList, setUserList] = useState([]);
-  // const [privateMessageList, setPrivateMessageList] = useState([]);
-  const [prvMsgCount, setPrvMsgCount] = useState(0);
 
   const username = props.socket.auth.username;
   const privateWith = props.privateMsg;
@@ -40,24 +38,6 @@ function PrivateMsgCont(props) {
     });
   }, [userList]);
 
-  // useEffect(() => {
-  //   props.socket.on("receive_privMsg", (data) => {
-  //     props.prvLst((list) => [...list, data]);
-  //     scrollDown();
-  //   });
-  // }, [props.socket]);
-
-  // const countMsgs = (privateMessageList) => {
-  //   if (privateMessageList) prvCount += 1;
-  //   setPrvMsgCount(prvCount);
-
-  //   console.log(prvCount);
-  // };
-
-  // useEffect(() => {
-  //   countMsgs();
-  // });
-
   return (
     <div className="privateMsgWindow">
       <div className="privateMsgHeader">
@@ -92,16 +72,14 @@ function PrivateMsgCont(props) {
         <input
           onKeyDown={props.startTyping}
           type="text"
-          placeholder="Hey..."
+          placeholder="..."
           value={currentPrivateMessage}
           className="input"
           onChange={(event) => {
             setCurrentPrivateMessage(event.target.value);
           }}
         />
-        {userList.map((user) => {
-          return <div> {user.typing ? "is typing.." : ""} </div>;
-        })}
+
         <button onClick={sendPrivateMessage}>Send</button>
       </form>
     </div>

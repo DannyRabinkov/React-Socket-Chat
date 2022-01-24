@@ -61,7 +61,7 @@ body {
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
-  padding: 5px;
+  padding: 25px;
 }
 
 #chat-footer {
@@ -126,20 +126,26 @@ body {
   width: 350px;
   height: 450px;
   border: solid #000 1px;
+  border-radius: 5px;
   margin-left: 550px;
   box-sizing: border-box;
   overflow-wrap: break-word;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 5px;
 }
+
 
 .privateMsgHeader {
   box-shadow: lightgreen;
   text-align: center;
   background-color: tan;
   border: lightcoral solid 2px;
+  border-radius: 5px;
 }
+
+
 
 .priateMsgBody {
   box-sizing: border-box;
@@ -148,6 +154,7 @@ body {
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  background-color: #dbcac3;
 }
 
 .privateMsgFooter {
