@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
 import io from "socket.io-client";
 
-let socket = io.connect("http://192.168.1.27:3000/", {
+let socket = io.connect("http://10.0.0.9:3000/", {
   path: "/my-app",
   autoConnect: false,
 });
